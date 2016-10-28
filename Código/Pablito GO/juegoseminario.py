@@ -13,8 +13,7 @@ respawn_medio = 400
 ancho_medio_nave = 32                                                      #ancho nave = 63
 alto_medio_nave = 31                                                       #alto nave = 61
 #velocidadX = 1
-#velocidadY = 2
-  
+#velocidadY = 2 
 
 BLANCO = (255,255,255)
 NEGRO = (0,0,0)
@@ -41,11 +40,13 @@ pj_nave.top = 450
 
 Roca = pygame.image.load("Roca1.gif")
 npc_roca = Roca.get_rect()
+colision_roca1 = True
 npc_roca.left = random.randint(-700, respawn_medio/2)
 npc_roca.top = random.randint(-200, -10)
 
 Roca2 = pygame.image.load("Roca2.gif")
 npc_roca2 = Roca2.get_rect()
+colision_roca2 = True
 npc_roca2.left = random.randint((respawn_medio+respawn_medio/2), 1200)
 npc_roca2.top = random.randint(-200, -10)
 
@@ -103,13 +104,11 @@ while not SalirJuego:
         disparoActivo = True                      
         pj_disparo.left = pj_nave.left + 23  
         pj_disparo.top = pj_nave.top - 25
-        
-# ------------------------------------------------------------------------
 
      if disparoActivo:             
         pj_disparo.top -= 4         
-        if pj_disparo.top <= 0:     
-            disparoActivo = False     
+        if pj_disparo.top <= 0 or pj_disparo.colliderect(npc_roca) or pj_disparo.colliderect(npc_roca2): 
+          disparoActivo = False     
 
 # ------------------------------------------------------------------------ respawn roca1
 
@@ -117,21 +116,35 @@ while not SalirJuego:
           npc_roca.left = random.randint(-700, respawn_medio/2)
           npc_roca.top = random.randint(-200, -10)
 
- # ------------------------------------------------------------------------ respawn roca2
+# ------------------------------------------------------------------------ respawn roca2
 
      if npc_roca2.left < -150 or npc_roca2.top > 750:
           npc_roca2.left = random.randint((respawn_medio+respawn_medio/2), 1200)
           npc_roca2.top = random.randint(-200, -10)
- 
-# ------------------------------------------------------------------------dibujos y personajes del juego
+
+# ------------------------------------------------------------------------ colision disparo-roca
+     if pj_disparo.colliderect(npc_roca):
+          npc_roca.left = random.randint(-700, respawn_medio/2)
+          npc_roca.top = random.randint(-200, -10)
+          pj_disparo.left = 1000
+          pj_disparo.top = 1000
+          
+# ------------------------------------------------------------------------ colision disparo-roca2
+     if pj_disparo.colliderect(npc_roca2):
+          npc_roca2.left = random.randint(-700, respawn_medio/2)
+          npc_roca2.top = random.randint(-200, -10)
+          pj_disparo.left = 1000
+          pj_disparo.top = 1000
+
+# ------------------------------------------------------------------------ dibujos y personajes del juego
 
      PANTALLA.blit(fondo,(fondox,fondoy))
      PANTALLA.blit(Roca,npc_roca)
      PANTALLA.blit(Roca2,npc_roca2)
      PANTALLA.blit(Nave,pj_nave)
-     if disparoActivo:                     
+     if disparoActivo:
         PANTALLA.blit(Disparo, pj_disparo)
-
+          
      tiempo_seg = pygame.time.get_ticks()/1000
      tiempo_seg = str(tiempo_seg)
      contador_tiempo = fuente1.render(tiempo_seg, 0, BLANCO)
