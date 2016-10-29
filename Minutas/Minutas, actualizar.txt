@@ -1,0 +1,32 @@
+Minutas
+------------------------------------ 1
+
+Tipo de juego, entre shooter nave o estilo Contra
+
+------------------------------------ 2
+
+Tipo de juego decidido, nombre a definir, estilo de personajes
+
+------------------------------------ 3
+
+Asignamos el estilo y el entorno, como nombres de personajes
+
+------------------------------------ 4
+
+Código
+
+------------------------------------ 5
+
+Código
+
+------------------------------------ 6
+
+Dificultad del juego, Código
+
+------------------------------------ 7
+
+Hacer documento de explicacion del juego, etc
+
+------------------------------------ 8
+
+(Reservado, previo al miercoles)
