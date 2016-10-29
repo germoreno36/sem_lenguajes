@@ -3,18 +3,21 @@ import random
 from datetime import datetime
 from pygame.locals import *
  
-# ------------------------------------------------------------------------ Definir colores
 
+# ------------------------------------------------------------------------ Resolucion pantalla
 ancho = 800
 alto = 600
+
+# ------------------------------------------------------------------------ Divisiones para respawn
 respawn_naves_ancho1 = 100
 respawn_naves_ancho2 = 700
 respawn_medio = 400
+
+# ------------------------------------------------------------------------
 ancho_medio_nave = 32                                                      #ancho nave = 63
 alto_medio_nave = 31                                                       #alto nave = 61
-#velocidadX = 1
-#velocidadY = 2 
-
+ 
+# ------------------------------------------------------------------------ Colores
 BLANCO = (255,255,255)
 NEGRO = (0,0,0)
 AZUL = (0,0,255)
@@ -26,13 +29,18 @@ BORDO = (178,34,34)
 MARRON = (139,69,19)
 
 # ------------------------------------------------------------------------
+puntuacion = 0                                                             #Contador puntuacion
+
+# ------------------------------------------------------------------------
 pygame.init()
-PANTALLA = pygame.display.set_mode((800,600))                              #Resolución
+PANTALLA = pygame.display.set_mode((ancho,alto))                           #Setear resolucion de pantalla
 pygame.display.set_caption('PABLITO GO')                                   #Nombre del juego en la ventana
 fuente1 = pygame.font.SysFont ("Calibri", 20, True, False)
+
 SalirJuego= False
 reloj = pygame.time.Clock()
 
+# ------------------------------------------------------------------------
 Nave = pygame.image.load("Nave.gif")
 pj_nave = Nave.get_rect()
 pj_nave.left = 400
@@ -63,7 +71,7 @@ pygame.mixer.music.play(-1,0.0)
 # ------------------------------------------------------------------------ Eventos del juego
 
 while not SalirJuego:
-     for event in pygame.event.get():                                      #recorremos los eventos de pygame
+     for event in pygame.event.get():                                      #recorrer eventos de pygame
         if event.type== pygame.QUIT:
                SalirJuego=True
                
@@ -110,33 +118,35 @@ while not SalirJuego:
         if pj_disparo.top <= 0 or pj_disparo.colliderect(npc_roca) or pj_disparo.colliderect(npc_roca2): 
           disparoActivo = False     
 
-# ------------------------------------------------------------------------ respawn roca1
+# ------------------------------------------------------------------------ Respawn roca1
 
      if npc_roca.left > 950 or npc_roca.top > 750:
           npc_roca.left = random.randint(-700, respawn_medio/2)
           npc_roca.top = random.randint(-200, -10)
 
-# ------------------------------------------------------------------------ respawn roca2
+# ------------------------------------------------------------------------ Respawn roca2
 
      if npc_roca2.left < -150 or npc_roca2.top > 750:
           npc_roca2.left = random.randint((respawn_medio+respawn_medio/2), 1200)
           npc_roca2.top = random.randint(-200, -10)
 
-# ------------------------------------------------------------------------ colision disparo-roca
+# ------------------------------------------------------------------------ Colision disparo-roca
      if pj_disparo.colliderect(npc_roca):
+          puntuacion += 1
           npc_roca.left = random.randint(-700, respawn_medio/2)
           npc_roca.top = random.randint(-200, -10)
           pj_disparo.left = 1000
           pj_disparo.top = 1000
           
-# ------------------------------------------------------------------------ colision disparo-roca2
+# ------------------------------------------------------------------------ Colision disparo-roca2
      if pj_disparo.colliderect(npc_roca2):
+          puntuacion += 1
           npc_roca2.left = random.randint(-700, respawn_medio/2)
           npc_roca2.top = random.randint(-200, -10)
           pj_disparo.left = 1000
           pj_disparo.top = 1000
 
-# ------------------------------------------------------------------------ dibujos y personajes del juego
+# ------------------------------------------------------------------------ Mostrar en pantalla
 
      PANTALLA.blit(fondo,(fondox,fondoy))
      PANTALLA.blit(Roca,npc_roca)
@@ -144,12 +154,20 @@ while not SalirJuego:
      PANTALLA.blit(Nave,pj_nave)
      if disparoActivo:
         PANTALLA.blit(Disparo, pj_disparo)
-          
-     tiempo_seg = pygame.time.get_ticks()/1000
-     tiempo_seg = str(tiempo_seg)
-     contador_tiempo = fuente1.render(tiempo_seg, 0, BLANCO)
-     PANTALLA.blit(contador_tiempo,(760,580))
-     pygame.display.update()                                          #actualiza el juego       
+        
+     tiempo_seg = pygame.time.get_ticks()/1000                             #Tiempo transcurrido
+     tiempo_seg = str(tiempo_seg)                                          #
+     contador_tiempo = fuente1.render(tiempo_seg, 0, BLANCO)               #
+     PANTALLA.blit(contador_tiempo,(760,580))                              #
+
+     puntuacion_str = str(puntuacion)                                      #Puntuacion
+     contador_puntuacion = fuente1.render(puntuacion_str, 0, BLANCO)       #
+     PANTALLA.blit(contador_puntuacion,(760, 15))                          #
+     texto_puntuacion = fuente1.render("Puntuacion:",0,BLANCO)             #
+     PANTALLA.blit(texto_puntuacion,(650,15))                              #
+     
+# ------------------------------------------------------------------------     
+     pygame.display.update()                                               #Actualizar juego       
 reloj.tick(40)
 pygame.quit()                                                            
 quit()
