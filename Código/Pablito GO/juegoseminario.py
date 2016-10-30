@@ -99,11 +99,11 @@ DisparoNPCNave3 = pygame.image.load("Disparo.gif")
 npc_nave3_disparo = DisparoNPCNave3.get_rect()        
 disparoActivo_npc_nave3 = False
 
-#EscudoNPCNave3 = pygame.image.load("NPC Escudo.gif")
-#npc_nave3_escudo = EscudoNPCNave3.get_rect()
-#npc_nave3_escudo.left = npc_nave3.left
-#npc_nave3_escudo.top = npc_nave3.top +alto_medio_npc_nave
-#npc_nave3_escudo_aparecer = False
+EscudoNPCNave3 = pygame.image.load("NPC Escudo.gif")
+npc_nave3_escudo = EscudoNPCNave3.get_rect()
+npc_nave3_escudo.left = npc_nave3.left
+npc_nave3_escudo.top = npc_nave3.top +alto_medio_npc_nave
+npc_nave3_escudo_activo = False
 
 
 Roca = pygame.image.load("Roca1.gif")
@@ -225,6 +225,9 @@ while not SalirJuego:
                npc_nave2.left = 2000
                npc_nave2.top = 2000
                npc_nave2_aparecer = False
+               npc_nave3_escudo.left = 2000
+               npc_nave3_escudo.top = 2000
+               npc_nave3_escudo_activo = False
           disparoActivo_npc_nave2 = False
           pj_disparo.top = -1000
 
@@ -241,9 +244,9 @@ while not SalirJuego:
           pj_disparo.top = -1000
 
 # ------------------------------------------------------------------------ Colision disparo-npc_nave3_escudo
-     #if pj_disparo.colliderect(npc_nave3_escudo):
-      #    disparoActivo_npc_nave3 = False
-       #   pj_disparo.top = -1000
+     if pj_disparo.colliderect(npc_nave3_escudo):
+          disparoActivo_npc_nave3 = False
+          pj_disparo.top = -1000
 # ------------------------------------------------------------------------ Naves enemigas
      if puntuacion == 5:                                                   #Respawn_nivel1
           nivel = 1
@@ -277,7 +280,7 @@ while not SalirJuego:
      if nivel == 2:
           npc_nave2_aparecer = True
           npc_nave3_aparecer = True
-          npc_nave3_escudo_aparecer = True
+          npc_nave3_escudo_activo = True
           
           if npc_nave2_aparecer == True and npc_nave2.top < 70:
                 npc_nave2.top += velocidad_respawn
@@ -321,6 +324,10 @@ while not SalirJuego:
                if npc_nave3_disparo.top >= 600:
                     disparoActivo_npc_nave3 = False
 
+          if npc_nave3_escudo_activo == True and npc_nave2.top == 70:
+               npc_nave3_escudo.left = npc_nave3.left - 12
+               npc_nave3_escudo.top = npc_nave3.top + 45
+               
 # ------------------------------------------------------------------------ Mostrar en pantalla
 
      PANTALLA.blit(fondo,(fondox,fondoy))
@@ -328,17 +335,17 @@ while not SalirJuego:
      PANTALLA.blit(Roca2,npc_roca2)
      PANTALLA.blit(Nave,pj_nave)
      if disparoActivo:
-        PANTALLA.blit(Disparo, pj_disparo)
+          PANTALLA.blit(Disparo, pj_disparo)
      PANTALLA.blit(NaveNPC, npc_nave)
      if disparoActivo_npc_nave:
-        PANTALLA.blit(DisparoNPCNave, npc_nave_disparo)
+          PANTALLA.blit(DisparoNPCNave, npc_nave_disparo)
      PANTALLA.blit(NaveNPC2, npc_nave2)
      if disparoActivo_npc_nave2:
-        PANTALLA.blit(DisparoNPCNave2, npc_nave2_disparo)
+          PANTALLA.blit(DisparoNPCNave2, npc_nave2_disparo)
      PANTALLA.blit(NaveNPC3, npc_nave3)
      if disparoActivo_npc_nave3:
-        PANTALLA.blit(DisparoNPCNave3, npc_nave3_disparo)
-        
+          PANTALLA.blit(DisparoNPCNave3, npc_nave3_disparo)
+     PANTALLA.blit(EscudoNPCNave3, npc_nave3_escudo)
      tiempo_seg = pygame.time.get_ticks()/1000                             #Tiempo transcurrido
      tiempo_seg = str(tiempo_seg)                                          #
      contador_tiempo = fuente1.render(tiempo_seg, 0, BLANCO)               #
