@@ -16,7 +16,8 @@ respawn_medio = 400
 # ------------------------------------------------------------------------
 ancho_medio_nave = 32                                                      #ancho nave = 63
 alto_medio_nave = 31                                                       #alto nave = 61
- 
+velocidad_npc_nave = 2
+
 # ------------------------------------------------------------------------ Colores
 BLANCO = (255,255,255)
 NEGRO = (0,0,0)
@@ -30,6 +31,7 @@ MARRON = (139,69,19)
 
 # ------------------------------------------------------------------------
 puntuacion = 0                                                             #Contador puntuacion
+naves_destruidas = 0                                                       #Contador naves destruidas
 
 # ------------------------------------------------------------------------
 pygame.init()
@@ -46,21 +48,27 @@ pj_nave = Nave.get_rect()
 pj_nave.left = 400
 pj_nave.top = 450
 
+Disparo = pygame.image.load("Disparo.gif")    
+pj_disparo = Disparo.get_rect()        
+disparoActivo = False
+
+
+NaveNPC = pygame.image.load("npc_nave.gif")
+npc_nave = NaveNPC.get_rect()
+npc_nave.left = random.randint(100, 700)
+npc_nave.top = -200
+npc_nave_aparecer = False
+
 Roca = pygame.image.load("Roca1.gif")
 npc_roca = Roca.get_rect()
-colision_roca1 = True
 npc_roca.left = random.randint(-700, respawn_medio/2)
 npc_roca.top = random.randint(-200, -10)
 
 Roca2 = pygame.image.load("Roca2.gif")
 npc_roca2 = Roca2.get_rect()
-colision_roca2 = True
 npc_roca2.left = random.randint((respawn_medio+respawn_medio/2), 1200)
-npc_roca2.top = random.randint(-200, -10)
+npc_roca2.top = random.randint(-200, -10)                       
 
-Disparo = pygame.image.load("Disparo.gif")    
-pj_disparo = Disparo.get_rect()        
-disparoActivo = False                               
  
 fondo = pygame.image.load("Fondo.jpg")
 fondox=0
@@ -74,21 +82,22 @@ while not SalirJuego:
      for event in pygame.event.get():                                      #recorrer eventos de pygame
         if event.type== pygame.QUIT:
                SalirJuego=True
-               
-# ------------------------------------------------------------------------ Movimiento de la nave               
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT and pj_nave.left >= ancho_medio_nave:
-                    pj_nave.move_ip(-30,0)
-            if event.key == pygame.K_RIGHT and pj_nave.right <= ancho - ancho_medio_nave:
-                    pj_nave.move_ip(30,0)
-            if event.key == pygame.K_UP and pj_nave.top >= alto_medio_nave:
-                    pj_nave.move_ip(0,-30)
-            if event.key == pygame.K_DOWN and pj_nave.top <= alto - alto_medio_nave*3:
-                    pj_nave.move_ip(0,30)
-
-                    
      keys = pygame.key.get_pressed()  
- 
+# ------------------------------------------------------------------------ Movimiento de la nave               
+#     if event.type == pygame.KEYDOWN:                                      #Movimiento por teclado
+#      if keys[K_LEFT]and pj_nave.left >= ancho_medio_nave :
+#             pj_nave.left -= 4
+#      if keys[K_RIGHT]and pj_nave.right <= ancho - ancho_medio_nave :
+#             pj_nave.left += 4
+#      if keys[K_UP] and pj_nave.top >= alto_medio_nave:
+#              pj_nave.top -= 4  
+#      if keys[K_DOWN]and pj_nave.top <= alto - alto_medio_nave*3:
+#                pj_nave.top += 4
+
+     pj_nave.left, pj_nave.top = pygame.mouse.get_pos()                    #Movimiento por mouse
+     pj_nave.left -= ancho_medio_nave
+     pj_nave.top -= alto_medio_nave
+     
 # ------------------------------------------------------------------------ Movimiento de la roca
 #     npc_roca.left += velocidadX                  
 #     npc_roca.top += velocidadY                   
@@ -143,9 +152,20 @@ while not SalirJuego:
           puntuacion += 1
           npc_roca2.left = random.randint(-700, respawn_medio/2)
           npc_roca2.top = random.randint(-200, -10)
-          pj_disparo.left = 1000
-          pj_disparo.top = 1000
+          pj_disparo.left = 2000
+          pj_disparo.top = 2000
 
+# ------------------------------------------------------------------------ Nave enemiga
+     if puntuacion == 5:
+          npc_nave_aparecer = True
+          if npc_nave_aparecer == True and npc_nave.top < 100:
+               npc_nave.top += velocidad_npc_nave
+     if npc_nave.top == 100:
+          if npc_nave.left < pj_nave.left:
+               npc_nave.left += velocidad_npc_nave
+          if npc_nave.left > pj_nave.left:
+               npc_nave.left -= velocidad_npc_nave
+                    
 # ------------------------------------------------------------------------ Mostrar en pantalla
 
      PANTALLA.blit(fondo,(fondox,fondoy))
@@ -154,7 +174,8 @@ while not SalirJuego:
      PANTALLA.blit(Nave,pj_nave)
      if disparoActivo:
         PANTALLA.blit(Disparo, pj_disparo)
-        
+     PANTALLA.blit(NaveNPC, npc_nave)
+     
      tiempo_seg = pygame.time.get_ticks()/1000                             #Tiempo transcurrido
      tiempo_seg = str(tiempo_seg)                                          #
      contador_tiempo = fuente1.render(tiempo_seg, 0, BLANCO)               #
