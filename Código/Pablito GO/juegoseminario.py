@@ -14,18 +14,23 @@ respawn_naves_ancho2 = 700
 respawn_medio = 400
 
 # ------------------------------------------------------------------------
-ancho_medio_nave = 28                                                      #ancho nave = 55
-alto_medio_nave = 36                                                       #alto nave = 72
+ancho_medio_nave = 27                                                      #ancho nave = 54
+alto_medio_nave = 32                                                       #alto nave = 68
 
 ancho_medio_npc_nave = 30                                                  #ancho npc_nave = 60
 alto_medio_npc_nave = 37                                                   #alto npc_nave = 53
 
 disparo_npc_nave = 3
 velocidad_respawn = 2
-velocidad_npc_nave = 1
+
+velocidad_npc_nave = 1                                                     #velocidad nave 1 y 2
 velocidad_npc_nave3 = 3
 velocidad_npc_boss = 4
 
+hp_npc_nave = 2
+hp_npc_nave2 = 2
+hp_npc_nave3 = 3
+hp_npc_boss = 5
 # ------------------------------------------------------------------------ Colores
 BLANCO = (255,255,255)
 NEGRO = (0,0,0)
@@ -52,7 +57,7 @@ SalirJuego= False
 reloj = pygame.time.Clock()
 
 # ------------------------------------------------------------------------
-Nave = pygame.image.load("Nave.gif")
+Nave = pygame.image.load("pj_nave.gif")
 pj_nave = Nave.get_rect()
 pj_nave.left = 400
 pj_nave.top = 450
@@ -93,6 +98,12 @@ npc_nave3_aparecer = False
 DisparoNPCNave3 = pygame.image.load("Disparo.gif")    
 npc_nave3_disparo = DisparoNPCNave3.get_rect()        
 disparoActivo_npc_nave3 = False
+
+#EscudoNPCNave3 = pygame.image.load("NPC Escudo.gif")
+#npc_nave3_escudo = EscudoNPCNave3.get_rect()
+#npc_nave3_escudo.left = npc_nave3.left
+#npc_nave3_escudo.top = npc_nave3.top +alto_medio_npc_nave
+#npc_nave3_escudo_aparecer = False
 
 
 Roca = pygame.image.load("Roca1.gif")
@@ -195,34 +206,44 @@ while not SalirJuego:
 
 # ------------------------------------------------------------------------ Colision disparo-npc_nave
      if pj_disparo.colliderect(npc_nave):
-          naves_destruidas += 1
-          puntuacion += 5
-          npc_nave.left = 2000
-          npc_nave.top = 2000
-          npc_nave_aparecer = False
+          hp_npc_nave -= 1
+          if  hp_npc_nave == 0:
+               naves_destruidas += 1
+               puntuacion += 5
+               npc_nave.left = 2000
+               npc_nave.top = 2000
+               npc_nave_aparecer = False
           disparoActivo_npc_nave = False
           pj_disparo.top = -1000
 
 # ------------------------------------------------------------------------ Colision disparo-npc_nave2
      if pj_disparo.colliderect(npc_nave2):
-          naves_destruidas += 1
-          puntuacion += 5
-          npc_nave2.left = 2000
-          npc_nave2.top = 2000
-          npc_nave2_aparecer = False
+          hp_npc_nave2 -= 1
+          if  hp_npc_nave2 == 0:
+               naves_destruidas += 1
+               puntuacion += 5
+               npc_nave2.left = 2000
+               npc_nave2.top = 2000
+               npc_nave2_aparecer = False
           disparoActivo_npc_nave2 = False
           pj_disparo.top = -1000
 
 # ------------------------------------------------------------------------ Colision disparo-npc_nave3
      if pj_disparo.colliderect(npc_nave3):
-          naves_destruidas += 1
-          puntuacion += 5
-          npc_nave3.left = 2000
-          npc_nave3.top = 2000
-          npc_nave3_aparecer = False
+          hp_npc_nave3 -= 1
+          if  hp_npc_nave3 == 0:
+               naves_destruidas += 1
+               puntuacion += 5
+               npc_nave3.left = 2000
+               npc_nave3.top = 2000
+               npc_nave3_aparecer = False
           disparoActivo_npc_nave3 = False
           pj_disparo.top = -1000
-          
+
+# ------------------------------------------------------------------------ Colision disparo-npc_nave3_escudo
+     #if pj_disparo.colliderect(npc_nave3_escudo):
+      #    disparoActivo_npc_nave3 = False
+       #   pj_disparo.top = -1000
 # ------------------------------------------------------------------------ Naves enemigas
      if puntuacion == 5:                                                   #Respawn_nivel1
           nivel = 1
@@ -256,18 +277,19 @@ while not SalirJuego:
      if nivel == 2:
           npc_nave2_aparecer = True
           npc_nave3_aparecer = True
+          npc_nave3_escudo_aparecer = True
           
-          if npc_nave2_aparecer == True and npc_nave2.top < 100:
+          if npc_nave2_aparecer == True and npc_nave2.top < 70:
                 npc_nave2.top += velocidad_respawn
                     
-          if npc_nave2.top == 100 and npc_nave2_aparecer == True:          #Movimiento npc_nave2
+          if npc_nave2.top == 70 and npc_nave2_aparecer == True:          #Movimiento npc_nave2
                if npc_nave2.left < pj_nave.left:
                     npc_nave2.left += velocidad_npc_nave
                if npc_nave2.left > pj_nave.left:
                     npc_nave2.left -= velocidad_npc_nave
                     
 
-          if  npc_nave2.top == 100 and not disparoActivo_npc_nave2:        #Disparo npc_nave2
+          if  npc_nave2.top == 70 and not disparoActivo_npc_nave2:        #Disparo npc_nave2
                disparoActivo_npc_nave2 = True
                npc_nave2_disparo.left = npc_nave2.left + 23  
                npc_nave2_disparo.top = npc_nave2.top + 25
@@ -299,7 +321,6 @@ while not SalirJuego:
                if npc_nave3_disparo.top >= 600:
                     disparoActivo_npc_nave3 = False
 
-
 # ------------------------------------------------------------------------ Mostrar en pantalla
 
      PANTALLA.blit(fondo,(fondox,fondoy))
@@ -317,6 +338,7 @@ while not SalirJuego:
      PANTALLA.blit(NaveNPC3, npc_nave3)
      if disparoActivo_npc_nave3:
         PANTALLA.blit(DisparoNPCNave3, npc_nave3_disparo)
+        
      tiempo_seg = pygame.time.get_ticks()/1000                             #Tiempo transcurrido
      tiempo_seg = str(tiempo_seg)                                          #
      contador_tiempo = fuente1.render(tiempo_seg, 0, BLANCO)               #
