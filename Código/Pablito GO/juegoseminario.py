@@ -20,17 +20,22 @@ alto_medio_nave = 32                                                       #alto
 ancho_medio_npc_nave = 30                                                  #ancho npc_nave = 60
 alto_medio_npc_nave = 37                                                   #alto npc_nave = 53
 
+ancho_medio_npc_boss = 100                                                 #ancho npc_boss = 200
+alto_medio_npc_boss = 64                                                   #alto npc_boss = 123
+
 disparo_npc_nave = 3
 velocidad_respawn = 2
 
 velocidad_npc_nave = 1                                                     #velocidad nave 1 y 2
 velocidad_npc_nave3 = 3
-velocidad_npc_boss = 4
+velocidad_npc_bossX = 4
+velocidad_npc_bossY = 2
 
 hp_npc_nave = 2
 hp_npc_nave2 = 2
 hp_npc_nave3 = 3
 hp_npc_boss = 5
+hp_npc_boss_escudo = 3
 # ------------------------------------------------------------------------ Colores
 BLANCO = (255,255,255)
 NEGRO = (0,0,0)
@@ -62,7 +67,7 @@ pj_nave = Nave.get_rect()
 pj_nave.left = 400
 pj_nave.top = 450
 
-Disparo = pygame.image.load("Disparo.gif")    
+Disparo = pygame.image.load("PJ Disparo.gif") 
 pj_disparo = Disparo.get_rect()        
 disparoActivo = False
 
@@ -73,18 +78,18 @@ npc_nave.left = random.randint(100, 700)
 npc_nave.top = -200
 npc_nave_aparecer = False
 
-DisparoNPCNave = pygame.image.load("Disparo.gif")    
+DisparoNPCNave = pygame.image.load("NPC Disparo.gif")    
 npc_nave_disparo = DisparoNPCNave.get_rect()        
 disparoActivo_npc_nave = False
 
 
-NaveNPC2 = pygame.image.load("npc_nave.gif")
+NaveNPC2 = pygame.image.load("npc_nave2.gif")
 npc_nave2 = NaveNPC2.get_rect()
 npc_nave2.left = random.randint(100, 700)
 npc_nave2.top = -200
 npc_nave2_aparecer = False
 
-DisparoNPCNave2 = pygame.image.load("Disparo.gif")    
+DisparoNPCNave2 = pygame.image.load("NPC Disparo.gif")    
 npc_nave2_disparo = DisparoNPCNave2.get_rect()        
 disparoActivo_npc_nave2 = False
 
@@ -95,7 +100,7 @@ npc_nave3.left = random.randint(100, 700)
 npc_nave3.top = -200
 npc_nave3_aparecer = False
 
-DisparoNPCNave3 = pygame.image.load("Disparo.gif")    
+DisparoNPCNave3 = pygame.image.load("NPC Disparo.gif")    
 npc_nave3_disparo = DisparoNPCNave3.get_rect()        
 disparoActivo_npc_nave3 = False
 
@@ -104,6 +109,28 @@ npc_nave3_escudo = EscudoNPCNave3.get_rect()
 npc_nave3_escudo.left = npc_nave3.left
 npc_nave3_escudo.top = npc_nave3.top +alto_medio_npc_nave
 npc_nave3_escudo_activo = False
+
+
+BossNPC = pygame.image.load("npc_boss.gif")
+npc_boss = BossNPC.get_rect()
+npc_boss.left = (ancho/2)- ancho_medio_npc_boss/2
+npc_boss.top = -200
+npc_boss_aparecer = False
+npc_boss_respawn = False
+
+EscudoNPCBoss = pygame.image.load("Escudo NPC Boss.gif")
+npc_boss_escudo = EscudoNPCBoss.get_rect()
+npc_boss_escudo.left = npc_boss.left
+npc_boss_escudo.top = npc_boss.top
+npc_boss_escudo_activo = False
+
+DisparoNPCBoss = pygame.image.load("NPC Disparo.gif")    
+npc_boss_disparo = DisparoNPCBoss.get_rect()        
+disparoActivo_npc_boss = False
+
+Disparo2NPCBoss = pygame.image.load("NPC Disparo.gif")    
+npc_boss_disparo2 = Disparo2NPCBoss.get_rect()        
+disparo2Activo_npc_boss = False
 
 
 Roca = pygame.image.load("Roca1.gif")
@@ -144,25 +171,7 @@ while not SalirJuego:
      pj_nave.left, pj_nave.top = pygame.mouse.get_pos()                    #Movimiento por mouse
      pj_nave.left -= ancho_medio_nave
      pj_nave.top -= alto_medio_nave
-     
-# ------------------------------------------------------------------------ Movimiento de la roca
-#     npc_roca.left += velocidadX                  
-#     npc_roca.top += velocidadY                   
-#     if npc_roca.left < 0 or npc_roca.right > ancho:
-#           velocidadX = -velocidadX                          
-#     if npc_roca.top < 0 or npc_roca.bottom > alto:
-#           velocidadY = -velocidadY
-     velocidadX1 = random.randint(1, 3)
-     velocidadY1 = random.randint(1, 2)
-     npc_roca.left += velocidadX1
-     npc_roca.top += velocidadY1
 
-# ------------------------------------------------------------------------ Movimiento de la roca2
-     velocidadX2 = random.randint(1, 3)
-     velocidadY2 = random.randint(1, 2)
-     npc_roca2.left += -velocidadX2
-     npc_roca2.top += velocidadY2
-           
 # ------------------------------------------------------------------------ Disparo
      if keys[K_SPACE] and not disparoActivo:      
         disparoActivo = True                      
@@ -174,7 +183,20 @@ while not SalirJuego:
         if pj_disparo.top <= 0 or pj_disparo.colliderect(npc_roca) or pj_disparo.colliderect(npc_roca2): 
           disparoActivo = False     
 
-# ------------------------------------------------------------------------ Respawn roca1
+# ------------------------------------------------------------------------ Movimiento de la roca
+
+     velocidadX1 = random.randint(1, 3)
+     velocidadY1 = random.randint(1, 2)
+     npc_roca.left += velocidadX1
+     npc_roca.top += velocidadY1
+
+# ------------------------------------------------------------------------ Movimiento de la roca2
+     velocidadX2 = random.randint(1, 3)
+     velocidadY2 = random.randint(1, 2)
+     npc_roca2.left += -velocidadX2
+     npc_roca2.top += velocidadY2
+           
+# ------------------------------------------------------------------------ Respawn roca
 
      if npc_roca.left > 950 or npc_roca.top > 750:
           npc_roca.left = random.randint(-700, respawn_medio/2)
@@ -213,7 +235,7 @@ while not SalirJuego:
                npc_nave.left = 2000
                npc_nave.top = 2000
                npc_nave_aparecer = False
-          disparoActivo_npc_nave = False
+               disparoActivo_npc_nave = False
           pj_disparo.top = -1000
 
 # ------------------------------------------------------------------------ Colision disparo-npc_nave2
@@ -228,7 +250,7 @@ while not SalirJuego:
                npc_nave3_escudo.left = 2000
                npc_nave3_escudo.top = 2000
                npc_nave3_escudo_activo = False
-          disparoActivo_npc_nave2 = False
+               disparoActivo_npc_nave2 = False
           pj_disparo.top = -1000
 
 # ------------------------------------------------------------------------ Colision disparo-npc_nave3
@@ -240,13 +262,36 @@ while not SalirJuego:
                npc_nave3.left = 2000
                npc_nave3.top = 2000
                npc_nave3_aparecer = False
-          disparoActivo_npc_nave3 = False
+               disparoActivo_npc_nave3 = False
           pj_disparo.top = -1000
 
 # ------------------------------------------------------------------------ Colision disparo-npc_nave3_escudo
      if pj_disparo.colliderect(npc_nave3_escudo):
-          disparoActivo_npc_nave3 = False
           pj_disparo.top = -1000
+
+# ------------------------------------------------------------------------ Colision disparo-npc_boss
+     if pj_disparo.colliderect(npc_boss):
+          hp_npc_boss -= 1
+          if  hp_npc_boss == 0:
+               naves_destruidas += 1
+               puntuacion += 20
+               npc_boss.left = 2000
+               npc_boss.top = 2000
+               npc_boss_aparecer = False
+               disparoActivo_npc_boss = False
+               disparo2Activo_npc_boss = False
+          pj_disparo.top = -1000
+          
+# ------------------------------------------------------------------------ Colision disparo-npc_boss_escudo
+     if pj_disparo.colliderect(npc_boss_escudo):
+          hp_npc_boss_escudo -= 1
+          pj_disparo.top = -1000
+          if hp_npc_boss_escudo == 0:
+               npc_boss_escudo.left = 2000
+               npc_boss_escudo.top = 2000
+               npc_boss_escudo_aparecer = False
+               npc_boss_escudo_activo = False
+          
 # ------------------------------------------------------------------------ Naves enemigas
      if puntuacion == 5:                                                   #Respawn_nivel1
           nivel = 1
@@ -307,7 +352,7 @@ while not SalirJuego:
           if npc_nave3_aparecer == True and npc_nave3.top < 140:
                 npc_nave3.top += velocidad_respawn
                     
-          if npc_nave3.top == 140 and npc_nave2_aparecer == True:          #Movimiento npc_nave3
+          if npc_nave3.top == 140 and npc_nave2_aparecer == True and hp_npc_boss > 0:#Movimiento npc_nave3
                if npc_nave3.left < pj_nave.left:
                     npc_nave3.left += velocidad_npc_nave3
                if npc_nave3.left > pj_nave.left:
@@ -327,6 +372,52 @@ while not SalirJuego:
           if npc_nave3_escudo_activo == True and npc_nave2.top == 70:
                npc_nave3_escudo.left = npc_nave3.left - 12
                npc_nave3_escudo.top = npc_nave3.top + 45
+
+# ------------------------------------------------------------------------
+     if naves_destruidas == 3:                                             #Respawn_nivel3
+          nivel = 3
+          
+     if nivel == 3:
+          npc_boss_aparecer = True
+          npc_boss_escudo_activo = True
+          
+          if npc_boss_aparecer == True and npc_boss.top < 20:
+               npc_boss.top += velocidad_respawn
+               npc_boss_respawn = True
+               
+
+          if npc_boss_respawn == True and npc_boss_aparecer == True:       #Movimiento npc_boss
+               npc_boss.left += velocidad_npc_bossX
+               npc_boss.top += velocidad_npc_bossY
+               if npc_boss.left < 0 or npc_boss.right > ancho:
+                    velocidad_npc_bossX = -velocidad_npc_bossX
+               if npc_boss.top < 20 or npc_boss.top > 250:
+                    velocidad_npc_bossY = -velocidad_npc_bossY
+
+          if npc_boss_escudo_activo == True and hp_npc_boss_escudo > 0:
+               npc_boss_escudo.left = npc_boss.left
+               npc_boss_escudo.top = npc_boss.top + alto_medio_npc_boss + 45
+
+
+          if  hp_npc_boss > 0 and not disparoActivo_npc_boss:              #Disparo npc_boss
+               disparoActivo_npc_boss = True
+               npc_boss_disparo.left = npc_boss.left + ancho_medio_npc_boss - ancho_medio_npc_boss/2  
+               npc_boss_disparo.top = npc_boss.top + alto_medio_npc_boss
+
+          if disparoActivo_npc_boss == True:             
+               npc_boss_disparo.top += disparo_npc_nave         
+               if npc_boss_disparo.top >= 600:
+                    disparoActivo_npc_boss = False
+
+          if  hp_npc_boss > 0 and not disparo2Activo_npc_boss:             #Disparo2 npc_boss
+               disparo2Activo_npc_boss = True
+               npc_boss_disparo2.left = npc_boss.left + ancho_medio_npc_boss + ancho_medio_npc_boss/2  
+               npc_boss_disparo2.top = npc_boss.top + alto_medio_npc_boss
+
+          if disparo2Activo_npc_boss == True:             
+               npc_boss_disparo2.top += disparo_npc_nave         
+               if npc_boss_disparo2.top >= 600:
+                    disparo2Activo_npc_boss = False
                
 # ------------------------------------------------------------------------ Mostrar en pantalla
 
@@ -346,6 +437,13 @@ while not SalirJuego:
      if disparoActivo_npc_nave3:
           PANTALLA.blit(DisparoNPCNave3, npc_nave3_disparo)
      PANTALLA.blit(EscudoNPCNave3, npc_nave3_escudo)
+     PANTALLA.blit(BossNPC, npc_boss)
+     if disparoActivo_npc_boss:
+          PANTALLA.blit(DisparoNPCBoss, npc_boss_disparo)
+     if disparo2Activo_npc_boss:
+          PANTALLA.blit(Disparo2NPCBoss, npc_boss_disparo2)
+     PANTALLA.blit(EscudoNPCBoss, npc_boss_escudo)
+     
      tiempo_seg = pygame.time.get_ticks()/1000                             #Tiempo transcurrido
      tiempo_seg = str(tiempo_seg)                                          #
      contador_tiempo = fuente1.render(tiempo_seg, 0, BLANCO)               #
