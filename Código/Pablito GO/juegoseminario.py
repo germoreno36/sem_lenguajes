@@ -112,6 +112,19 @@ npc_nave.left = random.randint(100, 700)
 npc_nave.top = -200
 npc_nave_aparecer = False
 
+NaveNPCVida = pygame.image.load("npc_barra_salud.gif")
+npc_nave_barra_salud = NaveNPCVida.get_rect()
+npc_nave_barra_salud.left = npc_nave.left + ancho_medio_npc_nave-12
+npc_nave_barra_salud.top = npc_nave.top + alto_medio_npc_nave/3
+npc_nave_barra_salud_aparecer = False
+
+NaveNPCVida2 = pygame.image.load("npc_barra_salud.gif")
+npc_nave_barra_salud2 = NaveNPCVida2.get_rect()
+npc_nave_barra_salud2.left = npc_nave.left + ancho_medio_npc_nave-1
+npc_nave_barra_salud2.top = npc_nave.top + alto_medio_npc_nave/3
+npc_nave_barra_salud2_aparecer = False
+
+
 DisparoNPCNave = pygame.image.load("NPC Disparo.gif")    
 npc_nave_disparo = DisparoNPCNave.get_rect()        
 disparoActivo_npc_nave = False
@@ -428,7 +441,17 @@ while not SalirJuego:
                npc_nave_disparo.top += disparo_npc_nave         
                if npc_nave_disparo.top >= 600:
                     disparoActivo_npc_nave = False
-                    
+
+          if hp_npc_nave == 2:                                             #Movimiento npc_nave_barra_salud
+               npc_nave_barra_salud.left = npc_nave.left + ancho_medio_npc_nave-12
+               npc_nave_barra_salud.top = npc_nave.top + alto_medio_npc_nave/3
+               npc_nave_barra_salud2.left = npc_nave.left + ancho_medio_npc_nave-1
+               npc_nave_barra_salud2.top = npc_nave.top + alto_medio_npc_nave/3
+
+          if hp_npc_nave == 1:
+               npc_nave_barra_salud.left = npc_nave.left + ancho_medio_npc_nave-12
+               npc_nave_barra_salud.top = npc_nave.top + alto_medio_npc_nave/3
+               
 # ------------------------------------------------------------------------
      if naves_destruidas == 1:                                             #Respawn_nivel2
           nivel = 2
@@ -584,6 +607,12 @@ while not SalirJuego:
           PANTALLA.blit(Vida2, pj_vida2)                                   #
      if pj_nave_hp == 2:                                                   #
           PANTALLA.blit(Vida, pj_vida)                                     #
+
+     if hp_npc_nave == 2:                                                  #Salud npc_nave
+          PANTALLA.blit(NaveNPCVida, npc_nave_barra_salud)                 #
+          PANTALLA.blit(NaveNPCVida2, npc_nave_barra_salud2)               #
+     if hp_npc_nave == 1:                                                  #
+          PANTALLA.blit(NaveNPCVida, npc_nave_barra_salud)
 # ------------------------------------------------------------------------     
      pygame.display.update()                                               #Actualizar juego       
 reloj.tick(40)
