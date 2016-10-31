@@ -20,6 +20,9 @@ alto_medio_nave = 32                                                       #alto
 ancho_medio_npc_nave = 30                                                  #ancho npc_nave = 60
 alto_medio_npc_nave = 37                                                   #alto npc_nave = 53
 
+ancho_escudo = 84
+alto_escudo = 43
+
 ancho_medio_npc_boss = 100                                                 #ancho npc_boss = 200
 alto_medio_npc_boss = 64                                                   #alto npc_boss = 123
 
@@ -36,6 +39,12 @@ hp_npc_nave2 = 2
 hp_npc_nave3 = 3
 hp_npc_boss = 5
 hp_npc_boss_escudo = 3
+
+
+pj_nave_hp = 3
+escudo_inventario = 0
+pj_escudo_hp = 2
+
 # ------------------------------------------------------------------------ Colores
 BLANCO = (255,255,255)
 NEGRO = (0,0,0)
@@ -70,6 +79,31 @@ pj_nave.top = 450
 Disparo = pygame.image.load("PJ Disparo.gif") 
 pj_disparo = Disparo.get_rect()        
 disparoActivo = False
+
+Escudo = pygame.image.load("PJ Escudo.gif")
+pj_escudo = Escudo.get_rect()
+pj_escudo.left = pj_nave.left
+pj_escudo.top = pj_nave.top - alto_medio_nave
+escudoActivo = False
+
+Vida = pygame.image.load("pj_vida.gif")
+pj_vida = Vida.get_rect()
+pj_vida.left = 72
+pj_vida.top = 562
+vidaActiva = True
+
+Vida2 = pygame.image.load("pj_vida.gif")
+pj_vida2 = Vida.get_rect()
+pj_vida2.left = 115
+pj_vida2.top = 562
+vida2Activa = True
+
+ItemEscudo = pygame.image.load ("Escudo_Item.gif")
+item_escudo = ItemEscudo.get_rect()
+item_escudo.left = random.randint(100,700)
+item_escudo.top = -200
+item_escudo_aparecer = False
+item_escudo_activo = False
 
 
 NaveNPC = pygame.image.load("npc_nave.gif")
@@ -107,13 +141,13 @@ disparoActivo_npc_nave3 = False
 EscudoNPCNave3 = pygame.image.load("NPC Escudo.gif")
 npc_nave3_escudo = EscudoNPCNave3.get_rect()
 npc_nave3_escudo.left = npc_nave3.left
-npc_nave3_escudo.top = npc_nave3.top +alto_medio_npc_nave
+npc_nave3_escudo.top = npc_nave3.top + alto_medio_npc_nave
 npc_nave3_escudo_activo = False
 
 
 BossNPC = pygame.image.load("npc_boss.gif")
 npc_boss = BossNPC.get_rect()
-npc_boss.left = (ancho/2)- ancho_medio_npc_boss/2
+npc_boss.left = (ancho/2) - ancho_medio_npc_boss/2
 npc_boss.top = -200
 npc_boss_aparecer = False
 npc_boss_respawn = False
@@ -291,7 +325,84 @@ while not SalirJuego:
                npc_boss_escudo.top = 2000
                npc_boss_escudo_aparecer = False
                npc_boss_escudo_activo = False
+               
+# ------------------------------------------------------------------------ Colisiones npc_disparos-pj_nave
+     if npc_nave_disparo.colliderect(pj_nave):                             #npc_nave_disparo-pj_nave
+          disparoActivo_npc_nave = False
+          pj_nave_hp -= 1
+
+     if npc_nave2_disparo.colliderect(pj_nave):
+          disparoActivo_npc_nave2 = False
+          pj_nave_hp -= 1
+
+     if npc_nave3_disparo.colliderect(pj_nave):
+          disparoActivo_npc_nave3 = False
+          pj_nave_hp -= 1
+
+     if npc_boss_disparo.colliderect(pj_nave):
+          disparoActivo_npc_boss = False
+          pj_nave_hp -= 1
+
+     if npc_boss_disparo2.colliderect(pj_nave):
+          disparo2Activo_npc_boss = False
+          pj_nave_hp -= 1
+
+# ------------------------------------------------------------------------ Colisiones npc_disparos-pj_escudo
+     if npc_nave_disparo.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_nave = False
+          pj_escudo_hp -=1
+
+     if npc_nave2_disparo.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_nave2 = False
+          pj_escudo_hp -=1
+
+     if npc_nave3_disparo.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_nave3 = False
+          pj_escudo_hp -=1
+
+     if npc_boss_disparo.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_boss = False
+          pj_escudo_hp -=1
+
+     if npc_boss_disparo2.colliderect(pj_escudo) and escudoActivo == True:
+          disparo2Activo_npc_boss = False
+          pj_escudo_hp -=1
+
+# ------------------------------------------------------------------------ Item_escudo
+     if puntuacion < 20 and puntuacion >= 15:
+          item_escudo_aparecer = True
+
+     if item_escudo_aparecer == True and item_escudo.top < 1000:
+          item_escudo_activo = True
+          item_escudo.top += velocidad_respawn
+
+     if item_escudo.top == 1000:
+          item_escudo_activo = False
+          item_escudo_aparecer = False
+          item_escudo.top = 1000
+# ------------------------------------------------------------------------ Colision Item_escudo-pj_nave
+     if item_escudo.colliderect(pj_nave):
+          escudo_inventario = 1
+          item_escudo_activo = False
+          item_escudo_aparecer = False
+          item_escudo.top = 1000
           
+# ------------------------------------------------------------------------ Uso item_escudo
+     if keys[K_v] and escudo_inventario == 1:
+          escudoActivo = True
+          escudo_inventario = 0
+
+# ------------------------------------------------------------------------ Escudo activo
+     if pj_escudo_hp <= 0:
+          escudoActivo = False
+          pj_escudo.left = 2000
+          pj_escudo.top = 2000
+
+# ------------------------------------------------------------------------ Movimiento escudo
+     pj_escudo.left, pj_escudo.top = pygame.mouse.get_pos()
+     pj_escudo.left -= ancho_escudo/2
+     pj_escudo.top -= alto_medio_nave*2 + alto_medio_nave/2
+
 # ------------------------------------------------------------------------ Naves enemigas
      if puntuacion == 5:                                                   #Respawn_nivel1
           nivel = 1
@@ -428,6 +539,9 @@ while not SalirJuego:
      if disparoActivo:
           PANTALLA.blit(Disparo, pj_disparo)
      PANTALLA.blit(NaveNPC, npc_nave)
+     if escudoActivo == True:
+          PANTALLA.blit(Escudo, pj_escudo)
+     
      if disparoActivo_npc_nave:
           PANTALLA.blit(DisparoNPCNave, npc_nave_disparo)
      PANTALLA.blit(NaveNPC2, npc_nave2)
@@ -443,24 +557,33 @@ while not SalirJuego:
      if disparo2Activo_npc_boss:
           PANTALLA.blit(Disparo2NPCBoss, npc_boss_disparo2)
      PANTALLA.blit(EscudoNPCBoss, npc_boss_escudo)
-     
+     if item_escudo_activo == True:
+          PANTALLA.blit(ItemEscudo, item_escudo)
+
      tiempo_seg = pygame.time.get_ticks()/1000                             #Tiempo transcurrido
      tiempo_seg = str(tiempo_seg)                                          #
-     contador_tiempo = fuente1.render(tiempo_seg, 0, BLANCO)               #
-     PANTALLA.blit(contador_tiempo,(760,580))                              #
+     contador_tiempo = fuente1.render(tiempo_seg,0,BLANCO)                 #
+     PANTALLA.blit(contador_tiempo,(760,575))                              #
 
      puntuacion_str = str(puntuacion)                                      #Puntuacion
-     contador_puntuacion = fuente1.render(puntuacion_str, 0, BLANCO)       #
-     PANTALLA.blit(contador_puntuacion,(760, 15))                          #
+     contador_puntuacion = fuente1.render(puntuacion_str,0,BLANCO)         #
+     PANTALLA.blit(contador_puntuacion,(760,15))                           #
      texto_puntuacion = fuente1.render("Puntuacion:",0,BLANCO)             #
      PANTALLA.blit(texto_puntuacion,(650,15))                              #
 
      naves_destruidas_str = str(naves_destruidas)                          #Naves destruidas
-     contador_naves_destruidas = fuente1.render(naves_destruidas_str, 0, BLANCO)#
-     PANTALLA.blit(contador_naves_destruidas,(165, 15))                    #
-     texto_naves_destruida = fuente1.render("Naves destruidas:",0,BLANCO)  #
-     PANTALLA.blit(texto_naves_destruida,(15,15))    
-     
+     contador_naves_destruidas = fuente1.render(naves_destruidas_str,0,BLANCO)#
+     PANTALLA.blit(contador_naves_destruidas,(165,15))                     #
+     texto_naves_destruida2 = fuente1.render("Naves destruidas:",0,BLANCO) #
+     PANTALLA.blit(texto_naves_destruida2,(15,15))                         #
+
+     texto_vidas_restantes = fuente1.render("Vidas:",0,BLANCO)             #Vidas restantes
+     PANTALLA.blit(texto_vidas_restantes,(15,575))                         #
+     if pj_nave_hp == 3:                                                   #
+          PANTALLA.blit(Vida, pj_vida)                                     #
+          PANTALLA.blit(Vida2, pj_vida2)                                   #
+     if pj_nave_hp == 2:                                                   #
+          PANTALLA.blit(Vida, pj_vida)                                     #
 # ------------------------------------------------------------------------     
      pygame.display.update()                                               #Actualizar juego       
 reloj.tick(40)
