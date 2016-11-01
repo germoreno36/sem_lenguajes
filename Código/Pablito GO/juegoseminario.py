@@ -71,22 +71,22 @@ SalirJuego= False
 reloj = pygame.time.Clock()
 
 # ------------------------------------------------------------------------
-Nave = pygame.image.load("pj_nave.gif")
+Nave = pygame.image.load("pj_nave.gif")                                    #PJ nave
 pj_nave = Nave.get_rect()
 pj_nave.left = 400
 pj_nave.top = 450
 
-Disparo = pygame.image.load("PJ Disparo.gif") 
+Disparo = pygame.image.load("PJ Disparo.gif")                              #PJ Disparo
 pj_disparo = Disparo.get_rect()        
 disparoActivo = False
 
-Escudo = pygame.image.load("PJ Escudo.gif")
+Escudo = pygame.image.load("PJ Escudo.gif")                                #PJ Escudo
 pj_escudo = Escudo.get_rect()
 pj_escudo.left = pj_nave.left
 pj_escudo.top = pj_nave.top - alto_medio_nave
 escudoActivo = False
 
-Vida = pygame.image.load("pj_vida.gif")
+Vida = pygame.image.load("pj_vida.gif")                                    #Vidas
 pj_vida = Vida.get_rect()
 pj_vida.left = 72
 pj_vida.top = 562
@@ -98,7 +98,7 @@ pj_vida2.left = 115
 pj_vida2.top = 562
 vida2Activa = True
 
-ItemEscudo = pygame.image.load ("Escudo_Item.gif")
+ItemEscudo = pygame.image.load ("Escudo_Item.gif")                         #Item Escudo
 item_escudo = ItemEscudo.get_rect()
 item_escudo.left = random.randint(100,700)
 item_escudo.top = -200
@@ -106,11 +106,15 @@ item_escudo_aparecer = False
 item_escudo_activo = False
 
 
-NaveNPC = pygame.image.load("npc_nave.gif")
+NaveNPC = pygame.image.load("npc_nave.gif")                                #NPC Nave
 npc_nave = NaveNPC.get_rect()
 npc_nave.left = random.randint(100, 700)
 npc_nave.top = -200
 npc_nave_aparecer = False
+
+DisparoNPCNave = pygame.image.load("NPC Disparo.gif")    
+npc_nave_disparo = DisparoNPCNave.get_rect()        
+disparoActivo_npc_nave = False
 
 NaveNPCVida = pygame.image.load("npc_barra_salud.gif")
 npc_nave_barra_salud = NaveNPCVida.get_rect()
@@ -125,12 +129,7 @@ npc_nave_barra_salud2.top = npc_nave.top + alto_medio_npc_nave/3
 npc_nave_barra_salud2_aparecer = False
 
 
-DisparoNPCNave = pygame.image.load("NPC Disparo.gif")    
-npc_nave_disparo = DisparoNPCNave.get_rect()        
-disparoActivo_npc_nave = False
-
-
-NaveNPC2 = pygame.image.load("npc_nave2.gif")
+NaveNPC2 = pygame.image.load("npc_nave2.gif")                              #NPC Nave2
 npc_nave2 = NaveNPC2.get_rect()
 npc_nave2.left = random.randint(100, 700)
 npc_nave2.top = -200
@@ -140,38 +139,62 @@ DisparoNPCNave2 = pygame.image.load("NPC Disparo.gif")
 npc_nave2_disparo = DisparoNPCNave2.get_rect()        
 disparoActivo_npc_nave2 = False
 
+NaveNPC2Vida = pygame.image.load("npc_barra_salud.gif")
+npc_nave2_barra_salud = NaveNPC2Vida.get_rect()
+npc_nave2_barra_salud.left = npc_nave2.left + ancho_medio_npc_nave-12
+npc_nave2_barra_salud.top = npc_nave2.top + alto_medio_npc_nave/3
 
-NaveNPC3 = pygame.image.load("npc_nave.gif")
+NaveNPC2Vida2 = pygame.image.load("npc_barra_salud.gif")
+npc_nave2_barra_salud2 = NaveNPC2Vida2.get_rect()
+npc_nave2_barra_salud2.left = npc_nave2.left + ancho_medio_npc_nave-1
+npc_nave2_barra_salud2.top = npc_nave2.top + alto_medio_npc_nave/3
+
+
+NaveNPC3 = pygame.image.load("npc_nave.gif")                               #NPC Nave3
 npc_nave3 = NaveNPC3.get_rect()
 npc_nave3.left = random.randint(100, 700)
 npc_nave3.top = -200
 npc_nave3_aparecer = False
 
-DisparoNPCNave3 = pygame.image.load("NPC Disparo.gif")    
+DisparoNPCNave3 = pygame.image.load("NPC Disparo.gif")
 npc_nave3_disparo = DisparoNPCNave3.get_rect()        
 disparoActivo_npc_nave3 = False
 
-EscudoNPCNave3 = pygame.image.load("NPC Escudo.gif")
+NaveNPC3Vida = pygame.image.load("npc_barra_salud.gif")
+npc_nave3_barra_salud = NaveNPC3Vida.get_rect()
+npc_nave3_barra_salud.left = npc_nave3.left + ancho_medio_npc_nave-17
+npc_nave3_barra_salud.top = npc_nave3.top + alto_medio_npc_nave/3
+
+NaveNPC3Vida2 = pygame.image.load("npc_barra_salud.gif")
+npc_nave3_barra_salud2 = NaveNPC3Vida2.get_rect()
+npc_nave3_barra_salud2.left = npc_nave3.left + ancho_medio_npc_nave-6
+npc_nave3_barra_salud2.top = npc_nave3.top + alto_medio_npc_nave/3
+
+NaveNPC3Vida3 = pygame.image.load("npc_barra_salud.gif")
+npc_nave3_barra_salud3 = NaveNPC3Vida3.get_rect()
+npc_nave3_barra_salud3.left = npc_nave3.left + ancho_medio_npc_nave+5
+npc_nave3_barra_salud3.top = npc_nave3.top + alto_medio_npc_nave/3
+
+EscudoNPCNave3 = pygame.image.load("NPC Escudo.gif")                       #NPC Nave3 Escudo
 npc_nave3_escudo = EscudoNPCNave3.get_rect()
 npc_nave3_escudo.left = npc_nave3.left
 npc_nave3_escudo.top = npc_nave3.top + alto_medio_npc_nave
-npc_nave3_escudo_activo = False
+npc_nave3_escudo_activo = True
+
+EscudoNPCNave3Vida = pygame.image.load("npc_barra_salud2.gif")
+npc_nave3_escudo_barra_salud = EscudoNPCNave3Vida.get_rect()
+npc_nave3_escudo_barra_salud.left = npc_nave3.left + ancho_medio_npc_nave-6
+npc_nave3_escudo_barra_salud.top = npc_nave3.top + alto_medio_npc_nave/3+7
 
 
-BossNPC = pygame.image.load("npc_boss.gif")
+BossNPC = pygame.image.load("npc_boss.gif")                                #NPC Boss
 npc_boss = BossNPC.get_rect()
 npc_boss.left = (ancho/2) - ancho_medio_npc_boss/2
 npc_boss.top = -200
 npc_boss_aparecer = False
 npc_boss_respawn = False
 
-EscudoNPCBoss = pygame.image.load("Escudo NPC Boss.gif")
-npc_boss_escudo = EscudoNPCBoss.get_rect()
-npc_boss_escudo.left = npc_boss.left
-npc_boss_escudo.top = npc_boss.top
-npc_boss_escudo_activo = False
-
-DisparoNPCBoss = pygame.image.load("NPC Disparo.gif")    
+DisparoNPCBoss = pygame.image.load("NPC Disparo.gif")
 npc_boss_disparo = DisparoNPCBoss.get_rect()        
 disparoActivo_npc_boss = False
 
@@ -179,6 +202,51 @@ Disparo2NPCBoss = pygame.image.load("NPC Disparo.gif")
 npc_boss_disparo2 = Disparo2NPCBoss.get_rect()        
 disparo2Activo_npc_boss = False
 
+BossNPCVida = pygame.image.load("npc_barra_salud.gif")
+npc_boss_barra_salud = BossNPCVida.get_rect()
+npc_boss_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-28
+npc_boss_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3
+
+BossNPCVida2 = pygame.image.load("npc_barra_salud.gif")
+npc_boss_barra_salud2 = BossNPCVida2.get_rect()
+npc_boss_barra_salud2.left = npc_boss.left + ancho_medio_npc_boss-17
+npc_boss_barra_salud2.top = npc_boss.top + alto_medio_npc_boss/3
+
+BossNPCVida3 = pygame.image.load("npc_barra_salud.gif")
+npc_boss_barra_salud3 = BossNPCVida3.get_rect()
+npc_boss_barra_salud3.left = npc_boss.left + ancho_medio_npc_boss-6
+npc_boss_barra_salud3.top = npc_boss.top + alto_medio_npc_boss/3
+
+BossNPCVida4 = pygame.image.load("npc_barra_salud.gif")
+npc_boss_barra_salud4 = BossNPCVida4.get_rect()
+npc_boss_barra_salud4.left = npc_boss.left + ancho_medio_npc_boss+5
+npc_boss_barra_salud4.top = npc_boss.top + alto_medio_npc_boss/3
+
+BossNPCVida5 = pygame.image.load("npc_barra_salud.gif")
+npc_boss_barra_salud5 = BossNPCVida5.get_rect()
+npc_boss_barra_salud5.left = npc_boss.left + ancho_medio_npc_boss+16
+npc_boss_barra_salud5.top = npc_boss.top + alto_medio_npc_boss/3
+
+EscudoNPCBoss = pygame.image.load("Escudo NPC Boss.gif")                   #NPC Boss Escudo
+npc_boss_escudo = EscudoNPCBoss.get_rect()
+npc_boss_escudo.left = npc_boss.left
+npc_boss_escudo.top = npc_boss.top
+npc_boss_escudo_activo = False
+
+EscudoNPCBossVida = pygame.image.load("npc_barra_salud2.gif")
+npc_boss_escudo_barra_salud = EscudoNPCBossVida.get_rect()
+npc_boss_escudo_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-17
+npc_boss_escudo_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3+7
+
+EscudoNPCBossVida2 = pygame.image.load("npc_barra_salud2.gif")
+npc_boss_escudo_barra_salud2 = EscudoNPCBossVida2.get_rect()
+npc_boss_escudo_barra_salud2.left = npc_boss.left + ancho_medio_npc_boss-6
+npc_boss_escudo_barra_salud2.top = npc_boss.top + alto_medio_npc_boss/3+7
+
+EscudoNPCBossVida3 = pygame.image.load("npc_barra_salud2.gif")
+npc_boss_escudo_barra_salud3 = EscudoNPCBossVida3.get_rect()
+npc_boss_escudo_barra_salud3.left = npc_boss.left + ancho_medio_npc_boss+5
+npc_boss_escudo_barra_salud3.top = npc_boss.top + alto_medio_npc_boss/3+7
 
 Roca = pygame.image.load("Roca1.gif")
 npc_roca = Roca.get_rect()
@@ -203,7 +271,7 @@ while not SalirJuego:
      for event in pygame.event.get():                                      #recorrer eventos de pygame
         if event.type== pygame.QUIT:
                SalirJuego=True
-     keys = pygame.key.get_pressed()  
+     keys = pygame.key.get_pressed()
 # ------------------------------------------------------------------------ Movimiento de la nave               
 #     if event.type == pygame.KEYDOWN:                                      #Movimiento por teclado
 #      if keys[K_LEFT]and pj_nave.left >= ancho_medio_nave :
@@ -283,6 +351,7 @@ while not SalirJuego:
                npc_nave.top = 2000
                npc_nave_aparecer = False
                disparoActivo_npc_nave = False
+               npc_nave_disparo.top = -100
           pj_disparo.top = -1000
 
 # ------------------------------------------------------------------------ Colision disparo-npc_nave2
@@ -298,6 +367,7 @@ while not SalirJuego:
                npc_nave3_escudo.top = 2000
                npc_nave3_escudo_activo = False
                disparoActivo_npc_nave2 = False
+               npc_nave2_disparo.top = -100
           pj_disparo.top = -1000
 
 # ------------------------------------------------------------------------ Colision disparo-npc_nave3
@@ -310,6 +380,7 @@ while not SalirJuego:
                npc_nave3.top = 2000
                npc_nave3_aparecer = False
                disparoActivo_npc_nave3 = False
+               npc_nave3_disparo.top = -100
           pj_disparo.top = -1000
 
 # ------------------------------------------------------------------------ Colision disparo-npc_nave3_escudo
@@ -340,23 +411,23 @@ while not SalirJuego:
                npc_boss_escudo_activo = False
                
 # ------------------------------------------------------------------------ Colisiones npc_disparos-pj_nave
-     if npc_nave_disparo.colliderect(pj_nave):                             #npc_nave_disparo-pj_nave
+     if npc_nave_disparo.colliderect(pj_nave) and npc_nave_aparecer == True:
           disparoActivo_npc_nave = False
           pj_nave_hp -= 1
 
-     if npc_nave2_disparo.colliderect(pj_nave):
+     if npc_nave2_disparo.colliderect(pj_nave) and npc_nave2_aparecer == True:
           disparoActivo_npc_nave2 = False
           pj_nave_hp -= 1
 
-     if npc_nave3_disparo.colliderect(pj_nave):
+     if npc_nave3_disparo.colliderect(pj_nave) and npc_nave3_aparecer == True:
           disparoActivo_npc_nave3 = False
           pj_nave_hp -= 1
 
-     if npc_boss_disparo.colliderect(pj_nave):
+     if npc_boss_disparo.colliderect(pj_nave) and npc_boss_aparecer == True:
           disparoActivo_npc_boss = False
           pj_nave_hp -= 1
 
-     if npc_boss_disparo2.colliderect(pj_nave):
+     if npc_boss_disparo2.colliderect(pj_nave) and npc_boss_aparecer == True:
           disparo2Activo_npc_boss = False
           pj_nave_hp -= 1
 
@@ -380,6 +451,57 @@ while not SalirJuego:
      if npc_boss_disparo2.colliderect(pj_escudo) and escudoActivo == True:
           disparo2Activo_npc_boss = False
           pj_escudo_hp -=1
+
+# ------------------------------------------------------------------------ Colisiones rocas,naves y escudos-pj_escudo
+     if npc_roca.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_boss = False
+          pj_escudo_hp = 0
+
+     if npc_roca2.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_boss = False
+          pj_escudo_hp = 0
+
+     if npc_nave.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_boss = False
+          pj_escudo_hp = 0
+
+     if npc_nave2.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_boss = False
+          pj_escudo_hp = 0
+
+     if npc_nave3.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_boss = False
+          pj_escudo_hp = 0
+
+     if npc_nave3_escudo.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_boss = False
+          pj_escudo_hp = 0
+
+     if npc_boss.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_boss = False
+          pj_escudo_hp = 0
+
+     if npc_boss_escudo.colliderect(pj_escudo) and escudoActivo == True:
+          disparoActivo_npc_boss = False
+          pj_escudo_hp = 0
+          
+# ------------------------------------------------------------------------ Colisiones npc-pj_nave (Game Over instantaneo)
+     if npc_roca.colliderect(pj_nave):
+          pj_nave_hp = 0
+     if npc_roca2.colliderect(pj_nave):
+          pj_nave_hp = 0
+     if npc_nave.colliderect(pj_nave):
+          pj_nave_hp = 0
+     if npc_nave2.colliderect(pj_nave):
+          pj_nave_hp = 0
+     if npc_nave3.colliderect(pj_nave):
+          pj_nave_hp = 0
+     if npc_nave3_escudo.colliderect(pj_nave):
+          pj_nave_hp = 0
+     if npc_boss.colliderect(pj_nave):
+          pj_nave_hp = 0
+     if npc_boss_escudo.colliderect(pj_nave):
+          pj_nave_hp = 0
 
 # ------------------------------------------------------------------------ Item_escudo
      if puntuacion < 20 and puntuacion >= 15:
@@ -464,14 +586,14 @@ while not SalirJuego:
           if npc_nave2_aparecer == True and npc_nave2.top < 70:
                 npc_nave2.top += velocidad_respawn
                     
-          if npc_nave2.top == 70 and npc_nave2_aparecer == True:          #Movimiento npc_nave2
+          if npc_nave2.top == 70 and npc_nave2_aparecer == True:           #Movimiento npc_nave2
                if npc_nave2.left < pj_nave.left:
                     npc_nave2.left += velocidad_npc_nave
                if npc_nave2.left > pj_nave.left:
                     npc_nave2.left -= velocidad_npc_nave
                     
 
-          if  npc_nave2.top == 70 and not disparoActivo_npc_nave2:        #Disparo npc_nave2
+          if  npc_nave2.top == 70 and not disparoActivo_npc_nave2:         #Disparo npc_nave2
                disparoActivo_npc_nave2 = True
                npc_nave2_disparo.left = npc_nave2.left + 23  
                npc_nave2_disparo.top = npc_nave2.top + 25
@@ -481,6 +603,15 @@ while not SalirJuego:
                if npc_nave2_disparo.top >= 600:
                     disparoActivo_npc_nave2 = False
 
+          if hp_npc_nave2 == 2:                                            #Movimiento npc_nave2_barra_salud
+               npc_nave2_barra_salud.left = npc_nave2.left + ancho_medio_npc_nave-12
+               npc_nave2_barra_salud.top = npc_nave2.top + alto_medio_npc_nave/3
+               npc_nave2_barra_salud2.left = npc_nave2.left + ancho_medio_npc_nave-1
+               npc_nave2_barra_salud2.top = npc_nave2.top + alto_medio_npc_nave/3
+
+          if hp_npc_nave2 == 1:
+               npc_nave2_barra_salud.left = npc_nave2.left + ancho_medio_npc_nave-12
+               npc_nave2_barra_salud.top = npc_nave2.top + alto_medio_npc_nave/3
 
 
           if npc_nave3_aparecer == True and npc_nave3.top < 140:
@@ -507,6 +638,28 @@ while not SalirJuego:
                npc_nave3_escudo.left = npc_nave3.left - 12
                npc_nave3_escudo.top = npc_nave3.top + 45
 
+          if hp_npc_nave3 == 3:                                            #Movimiento npc_nave3_barra_salud
+               npc_nave3_barra_salud.left = npc_nave3.left + ancho_medio_npc_nave-17
+               npc_nave3_barra_salud.top = npc_nave3.top + alto_medio_npc_nave/3
+               npc_nave3_barra_salud2.left = npc_nave3.left + ancho_medio_npc_nave-6
+               npc_nave3_barra_salud2.top = npc_nave3.top + alto_medio_npc_nave/3
+               npc_nave3_barra_salud3.left = npc_nave3.left + ancho_medio_npc_nave+5
+               npc_nave3_barra_salud3.top = npc_nave3.top + alto_medio_npc_nave/3
+               
+          if hp_npc_nave3 == 2:
+               npc_nave3_barra_salud.left = npc_nave3.left + ancho_medio_npc_nave-17
+               npc_nave3_barra_salud.top = npc_nave3.top + alto_medio_npc_nave/3
+               npc_nave3_barra_salud2.left = npc_nave3.left + ancho_medio_npc_nave-6
+               npc_nave3_barra_salud2.top = npc_nave3.top + alto_medio_npc_nave/3
+
+          if hp_npc_nave3 == 1:
+               npc_nave3_barra_salud.left = npc_nave3.left + ancho_medio_npc_nave-17
+               npc_nave3_barra_salud.top = npc_nave3.top + alto_medio_npc_nave/3
+
+          if npc_nave3_escudo_activo == True:                              #Movimiento npc_nave3_escudo_barra_salud
+               npc_nave3_escudo_barra_salud.left = npc_nave3.left + ancho_medio_npc_nave-6
+               npc_nave3_escudo_barra_salud.top = npc_nave3.top + alto_medio_npc_nave/3+6
+               
 # ------------------------------------------------------------------------
      if naves_destruidas == 3:                                             #Respawn_nivel3
           nivel = 3
@@ -552,9 +705,66 @@ while not SalirJuego:
                npc_boss_disparo2.top += disparo_npc_nave         
                if npc_boss_disparo2.top >= 600:
                     disparo2Activo_npc_boss = False
+
+          if hp_npc_boss == 5:                                             #Movimiento npc_boss_barra_salud
+               npc_boss_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-28
+               npc_boss_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3
+               npc_boss_barra_salud2.left = npc_boss.left + ancho_medio_npc_boss-17
+               npc_boss_barra_salud2.top = npc_boss.top + alto_medio_npc_boss/3
+               npc_boss_barra_salud3.left = npc_boss.left + ancho_medio_npc_boss-6
+               npc_boss_barra_salud3.top = npc_boss.top + alto_medio_npc_boss/3
+               npc_boss_barra_salud4.left = npc_boss.left + ancho_medio_npc_boss+5
+               npc_boss_barra_salud4.top = npc_boss.top + alto_medio_npc_boss/3
+               npc_boss_barra_salud5.left = npc_boss.left + ancho_medio_npc_boss+16
+               npc_boss_barra_salud5.top = npc_boss.top + alto_medio_npc_boss/3
+
+          if hp_npc_boss == 4:
+               npc_boss_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-28
+               npc_boss_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3
+               npc_boss_barra_salud2.left = npc_boss.left + ancho_medio_npc_boss-17
+               npc_boss_barra_salud2.top = npc_boss.top + alto_medio_npc_boss/3
+               npc_boss_barra_salud3.left = npc_boss.left + ancho_medio_npc_boss-6
+               npc_boss_barra_salud3.top = npc_boss.top + alto_medio_npc_boss/3
+               npc_boss_barra_salud4.left = npc_boss.left + ancho_medio_npc_boss+5
+               npc_boss_barra_salud4.top = npc_boss.top + alto_medio_npc_boss/3
+               
+          if hp_npc_boss == 3:
+               npc_boss_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-28
+               npc_boss_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3
+               npc_boss_barra_salud2.left = npc_boss.left + ancho_medio_npc_boss-17
+               npc_boss_barra_salud2.top = npc_boss.top + alto_medio_npc_boss/3
+               npc_boss_barra_salud3.left = npc_boss.left + ancho_medio_npc_boss-6
+               npc_boss_barra_salud3.top = npc_boss.top + alto_medio_npc_boss/3
+               
+          if hp_npc_boss == 2:
+               npc_boss_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-28
+               npc_boss_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3
+               npc_boss_barra_salud2.left = npc_boss.left + ancho_medio_npc_boss-17
+               npc_boss_barra_salud2.top = npc_boss.top + alto_medio_npc_boss/3
+
+          if hp_npc_boss == 1:
+               npc_boss_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-28
+               npc_boss_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3
+
+          if hp_npc_boss_escudo == 3:                                      #Movimiento npc_boss_escudo_barra_salud
+               npc_boss_escudo_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-17
+               npc_boss_escudo_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3+7
+               npc_boss_escudo_barra_salud2.left = npc_boss.left + ancho_medio_npc_boss-6
+               npc_boss_escudo_barra_salud2.top = npc_boss.top + alto_medio_npc_boss/3+7
+               npc_boss_escudo_barra_salud3.left = npc_boss.left + ancho_medio_npc_boss+5
+               npc_boss_escudo_barra_salud3.top = npc_boss.top + alto_medio_npc_boss/3+7
+
+          if hp_npc_boss_escudo == 2:
+               npc_boss_escudo_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-17
+               npc_boss_escudo_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3+7
+               npc_boss_escudo_barra_salud2.left = npc_boss.left + ancho_medio_npc_boss-6
+               npc_boss_escudo_barra_salud2.top = npc_boss.top + alto_medio_npc_boss/3+7
+
+          if hp_npc_boss_escudo == 1:
+               npc_boss_escudo_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-17
+               npc_boss_escudo_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3+7
                
 # ------------------------------------------------------------------------ Mostrar en pantalla
-
      PANTALLA.blit(fondo,(fondox,fondoy))
      PANTALLA.blit(Roca,npc_roca)
      PANTALLA.blit(Roca2,npc_roca2)
@@ -602,6 +812,11 @@ while not SalirJuego:
 
      texto_vidas_restantes = fuente1.render("Vidas:",0,BLANCO)             #Vidas restantes
      PANTALLA.blit(texto_vidas_restantes,(15,575))                         #
+
+#     salud_restante = str(pj_nave_hp)                                      #PRUEBA HP PJ NAVE
+#     estado_salud_restante = fuente1.render(salud_restante,0,BLANCO)       #     
+#     PANTALLA.blit(estado_salud_restante,(250,575))                        #
+     
      if pj_nave_hp == 3:                                                   #
           PANTALLA.blit(Vida, pj_vida)                                     #
           PANTALLA.blit(Vida2, pj_vida2)                                   #
@@ -612,7 +827,55 @@ while not SalirJuego:
           PANTALLA.blit(NaveNPCVida, npc_nave_barra_salud)                 #
           PANTALLA.blit(NaveNPCVida2, npc_nave_barra_salud2)               #
      if hp_npc_nave == 1:                                                  #
-          PANTALLA.blit(NaveNPCVida, npc_nave_barra_salud)
+          PANTALLA.blit(NaveNPCVida, npc_nave_barra_salud)                 #
+
+     if hp_npc_nave2 == 2:                                                 #Salud npc_nave2
+          PANTALLA.blit(NaveNPC2Vida, npc_nave2_barra_salud)               #
+          PANTALLA.blit(NaveNPC2Vida2, npc_nave2_barra_salud2)             #
+     if hp_npc_nave2 == 1:                                                 #
+          PANTALLA.blit(NaveNPC2Vida, npc_nave2_barra_salud)               #
+
+     if hp_npc_nave3 == 3:                                                 #Salud npc_nave3
+          PANTALLA.blit(NaveNPC3Vida, npc_nave3_barra_salud)               #
+          PANTALLA.blit(NaveNPC3Vida2, npc_nave3_barra_salud2)             #
+          PANTALLA.blit(NaveNPC3Vida3, npc_nave3_barra_salud3)             #
+     if hp_npc_nave3 == 2:                                                 #
+          PANTALLA.blit(NaveNPC3Vida, npc_nave3_barra_salud)               #
+          PANTALLA.blit(NaveNPC3Vida2, npc_nave3_barra_salud2)             #
+     if hp_npc_nave3 == 1:                                                 #
+          PANTALLA.blit(NaveNPC3Vida, npc_nave3_barra_salud)               #
+     if hp_npc_nave2 > 0:                                                  #Salud npc_nave3_escudo
+          PANTALLA.blit(EscudoNPCNave3Vida, npc_nave3_escudo_barra_salud)  #
+
+     if hp_npc_boss == 5:                                                  #Salud npc_boss
+          PANTALLA.blit(BossNPCVida5, npc_boss_barra_salud5)               #
+          PANTALLA.blit(BossNPCVida4, npc_boss_barra_salud4)               #
+          PANTALLA.blit(BossNPCVida3, npc_boss_barra_salud3)               #
+          PANTALLA.blit(BossNPCVida2, npc_boss_barra_salud2)               #
+          PANTALLA.blit(BossNPCVida, npc_boss_barra_salud)                 #
+     if hp_npc_boss == 4:                                                  #
+          PANTALLA.blit(BossNPCVida4, npc_boss_barra_salud4)               #
+          PANTALLA.blit(BossNPCVida3, npc_boss_barra_salud3)               #
+          PANTALLA.blit(BossNPCVida2, npc_boss_barra_salud2)               #
+          PANTALLA.blit(BossNPCVida, npc_boss_barra_salud)                 #
+     if hp_npc_boss == 3:                                                  #
+          PANTALLA.blit(BossNPCVida3, npc_boss_barra_salud3)               #
+          PANTALLA.blit(BossNPCVida2, npc_boss_barra_salud2)               #
+          PANTALLA.blit(BossNPCVida, npc_boss_barra_salud)                 #
+     if hp_npc_boss == 2:                                                  #
+          PANTALLA.blit(BossNPCVida2, npc_boss_barra_salud2)               #
+          PANTALLA.blit(BossNPCVida, npc_boss_barra_salud)                 #
+     if hp_npc_boss == 1:                                                  #
+          PANTALLA.blit(BossNPCVida, npc_boss_barra_salud)                 #
+     if hp_npc_boss_escudo == 3:                                           #Salud npc_boss_escudo
+          PANTALLA.blit(EscudoNPCBossVida3, npc_boss_escudo_barra_salud3)  #
+          PANTALLA.blit(EscudoNPCBossVida2, npc_boss_escudo_barra_salud2)  #
+          PANTALLA.blit(EscudoNPCBossVida, npc_boss_escudo_barra_salud)    #
+     if hp_npc_boss_escudo == 2:                                           #
+          PANTALLA.blit(EscudoNPCBossVida2, npc_boss_escudo_barra_salud2)  #
+          PANTALLA.blit(EscudoNPCBossVida, npc_boss_escudo_barra_salud)    #
+     if hp_npc_boss_escudo == 1:                                           #
+          PANTALLA.blit(EscudoNPCBossVida, npc_boss_escudo_barra_salud)    #
 # ------------------------------------------------------------------------     
      pygame.display.update()                                               #Actualizar juego       
 reloj.tick(40)
