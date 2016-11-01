@@ -262,6 +262,10 @@ npc_roca2.top = random.randint(-200, -10)
 fondo = pygame.image.load("Fondo.jpg")
 fondox=0
 fondoy=0
+
+# ------------------------------------------------------------------------ #Estado puntos extra al ganar
+puntos_otorgados = False
+
 # ------------------------------------------------------------------------ Musica del juego
 pygame.mixer.music.load("melodyloops-adrenaline.mp3")
 pygame.mixer.music.play(-1,0.0)
@@ -763,6 +767,14 @@ while not SalirJuego:
           if hp_npc_boss_escudo == 1:
                npc_boss_escudo_barra_salud.left = npc_boss.left + ancho_medio_npc_boss-17
                npc_boss_escudo_barra_salud.top = npc_boss.top + alto_medio_npc_boss/3+7
+
+# ------------------------------------------------------------------------ Puntos extra al ganar
+     if naves_destruidas == 4 and puntos_otorgados == False:
+          if pj_nave_hp == 3:
+               puntuacion += 20
+          if pj_nave_hp == 2:
+               puntuacion += 10
+          puntos_otorgados = True
                
 # ------------------------------------------------------------------------ Mostrar en pantalla
      PANTALLA.blit(fondo,(fondox,fondoy))
