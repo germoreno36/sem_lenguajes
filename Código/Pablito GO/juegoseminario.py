@@ -473,8 +473,8 @@ while estado_app !=7:                                                           
                 pj_disparo.top = -1000
 
         # ------------------------------------------------------------------------ Colision disparo-npc_nave3_escudo
-                if pj_disparo.colliderect(npc_nave3_escudo):
-                    pj_disparo.top = -1000
+            if pj_disparo.colliderect(npc_nave3_escudo):
+                pj_disparo.top = -1000
 
         # ------------------------------------------------------------------------ Colision disparo-npc_boss
             if pj_disparo.colliderect(npc_boss):
