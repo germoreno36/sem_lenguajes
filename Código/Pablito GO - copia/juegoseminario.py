@@ -31,21 +31,21 @@ pygame.init()
 PANTALLA = pygame.display.set_mode((ancho,alto))                                    #Setear resolucion de pantalla
 pygame.display.set_caption('PABLITO GO')                                            #Nombre del juego en la ventana
 
-jugar = pygame.image.load("jugardenuevo1.png")                                      #BOTONES
-jugar1 = pygame.image.load("jugardenuevo2.png")
+jugar = pygame.image.load("botones/jugar1.gif")                                      #BOTONES
+jugar1 = pygame.image.load("botones/jugar2.gif")
 
-verpuntos = pygame.image.load("verpuntajes1.png")
-verpuntos1 = pygame.image.load("verpuntajes2.png")
+verpuntos = pygame.image.load("botones/puntajes1.gif")
+verpuntos1 = pygame.image.load("botones/puntajes2.gif")
 
-salirjuego = pygame.image.load("salir1.png")
-salirjuego1 = pygame.image.load("salir2.png")
+salirjuego = pygame.image.load("botones/salir1.gif")
+salirjuego1 = pygame.image.load("botones/salir2.gif")
 
 menuinicial =  pygame.image.load("volveralmenu1.png")
 menuinicial1= pygame.image.load("volveralmenu2.png")
        
-boton1=boton(jugar,jugar1,250,100)
-boton2=boton(verpuntos,verpuntos1,250,250)
-boton3=boton(salirjuego,salirjuego1,250,400)
+boton1=boton(jugar,jugar1,100,312)
+boton2=boton(verpuntos,verpuntos1,150,412)
+boton3=boton(salirjuego,salirjuego1,175,462)
 botonMenuinicial=boton(menuinicial,menuinicial1,250,400)
 cursor=Cursor()
 
@@ -67,7 +67,7 @@ MARRON = (139,69,19)
 while estado_app !=7:                                                               # 7 = Salir
     while estado_app == 1:                                                          # 1 = Menu Inicio
          
-        menuF = pygame.image.load("Pablito GO.jpg")
+        menuF = pygame.image.load("Pablito GO Menu.jpg")
         Fx=0
         Fy=0
         for event in pygame.event.get():
@@ -988,13 +988,18 @@ while estado_app !=7:                                                           
 
     # ------------------------------------------------------------------------
     while estado_app == 4:                                                      # 4 = Puntuaciones
+        puntuaciones_img = pygame.image.load("Pablito GO.jpg")
+        puntuaciones_imgx=0
+        puntuaciones_imgy=0
+        
         for event in pygame.event.get():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if cursor.colliderect(botonMenuinicial.rect):
                     estado_app=1
                 
-        PANTALLA.fill(VERDE)
+        #PANTALLA.fill(VERDE)
+        PANTALLA.blit(puntuaciones_img,(puntuaciones_imgx,puntuaciones_imgy))
         botonMenuinicial.update(PANTALLA,cursor)
         pygame.display.update()
         cursor.update()
