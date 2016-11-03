@@ -29,4 +29,5 @@ Hacer documento de explicacion del juego, etc
 
 ------------------------------------ 8
 
-(Reservado, previo al miercoles)
+Cambiar la pista al ganar, editar el pdf, ordenar las imagenes y botones nuevos
+Enviar mail
